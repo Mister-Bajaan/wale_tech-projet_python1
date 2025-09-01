@@ -48,49 +48,15 @@ cadre_dessin.pack()
 #------------------------ Début du programme ------------------------#
 
 
-"""
-    --- Explication des fonctions ---
-    selectionner_point() : Permet de choisir un point dans la fenêtre, pour le moment les coordonnées sont saisies manuellement par l'utilisateur
-    dessiner_point() : Permet de dessiner un point dans la fenêtre
-    
-    --- Explication des variables ---
-    point : Nom de la variable qui contient le nom du point sélectionné
-    couleur_point : Nom de la variable qui contient la couleur du point sélectionné
-    rayon_point : Nom de la variable qui contient le rayon du point sélectionné
-    
-    --- Explication des attributs ---
-    x_point : Coordonnée x du point sélectionné
-    y_point : Coordonnée y du point sélectionné
-"""
+# Cette fonction demande à l'utilisateur de saisir les coordonnées des points
 def selectionner_point():
-    numero_point = 1
-    
-    while numero_point <= 4:
-        if numero_point == 1 :
-            point = "A"
-        elif numero_point == 2 : 
-            point = "B"
-        elif numero_point == 3 : 
-            point = "C"
-        elif numero_point == 4 : 
-            point = "D"
-        
-        
+    for point in ["A", "B", "C", "D"]:
         x_point = int(input(f"Entrez la coordonnée x du point {point} : "))
         y_point = int(input(f"Entrez la coordonnée y du point {point} : "))
+        COORDONEES_POINT[point] = (x_point, y_point)
+       
         
-        if numero_point == 1 : 
-            COORDONEES_POINT["A"] = (x_point, y_point)
-        elif numero_point == 2 : 
-            COORDONEES_POINT["B"] = (x_point, y_point)
-        elif numero_point == 3 : 
-            COORDONEES_POINT["C"] = (x_point, y_point)
-        elif numero_point == 4 : 
-            COORDONEES_POINT["D"] = (x_point, y_point)
-        
-        numero_point += 1
-        
-
+# Cette fonction dessine les points sur la fenêtre
 def dessiner_point(cadre_dessin, couleur_point=COULEUR_POINT, rayon_point=RAYON_POINT):
     
     for point in COORDONEES_POINT : 
@@ -105,13 +71,45 @@ def dessiner_point(cadre_dessin, couleur_point=COULEUR_POINT, rayon_point=RAYON_
             x + rayon_point, y + rayon_point,
             fill=couleur_point
         )
+        
+        # Afficher le nom du point juste à côté (au-dessus)
+        cadre_dessin.create_text(
+            x, y - 10,  # légèrement au-dessus du point
+            text=point,
+            fill="black",
+        )
+
     
     
 def main():
     selectionner_point()
-    dessiner_point()
+    dessiner_point(cadre_dessin)
 
 main()
+
+"""
+    --- Pour avoir un rectangle avec les points A, B, C et D ---
+    
+    A ----- B
+    |       |
+    D ----- C
+    
+    Xa = Xd
+    Xb = Xc
+    
+    Xa = Xd < Xb = Xc
+    
+    Ya = Yb
+    Yc = Yd
+    Ya = Yb < Yc = Yd
+    
+    
+    Exemple : Pour un rectangle de taille 150x50
+    A(50,50) 
+    B(200,50) 
+    C(200,100) 
+    D(50,100)
+"""
 
 # Lancer la fenêtre
 fenetre.mainloop()
