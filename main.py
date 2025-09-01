@@ -7,12 +7,16 @@ from tkinter import Canvas, Tk
 # Largeur et hauteur de la fenêtre
 CANVAS_WIDTH = 500
 CANVAS_HEIGHT = 500
-BACKGROUND_COLOR = 'gray75'
+BACKGROUND_COLOR = '#f6f6f6'
 
 # Coordonnées des points
 COORDONEES_POINT = {}
 RAYON_POINT= 3
-COULEUR_POINT = 'blue'
+COULEUR_POINT = '#34495e'
+
+# Caractéristiques des segments
+EPAISAUR_SEGMENT = 2
+COULEUR_SEGMENT = '#b7c2c8'
 
 
 
@@ -76,14 +80,49 @@ def dessiner_point(cadre_dessin, couleur_point=COULEUR_POINT, rayon_point=RAYON_
         cadre_dessin.create_text(
             x, y - 10,  # légèrement au-dessus du point
             text=point,
-            fill="black",
+            fill="#1c1c1e",
         )
-
+        
+        
+def dessiner_segment(cadre_dessin, couleur_segment=COULEUR_SEGMENT,epaiseur_segment=EPAISAUR_SEGMENT ) : 
+    
+    # Segment AB
+    cadre_dessin.create_line(
+        COORDONEES_POINT["A"][0], COORDONEES_POINT["A"][1],
+        COORDONEES_POINT["B"][0], COORDONEES_POINT["B"][1],
+        fill=couleur_segment,
+        width=epaiseur_segment
+    )
+    
+    # Segment BC
+    cadre_dessin.create_line(
+        COORDONEES_POINT["B"][0], COORDONEES_POINT["B"][1],
+        COORDONEES_POINT["C"][0], COORDONEES_POINT["C"][1],
+        fill=couleur_segment,
+        width=epaiseur_segment
+    )
+    
+    #Segment CD
+    cadre_dessin.create_line(
+        COORDONEES_POINT["C"][0], COORDONEES_POINT["C"][1],
+        COORDONEES_POINT["D"][0], COORDONEES_POINT["D"][1],
+        fill=couleur_segment,
+        width=epaiseur_segment
+     )
+    
+    #Segment DA
+    cadre_dessin.create_line(
+    COORDONEES_POINT["D"][0], COORDONEES_POINT["D"][1],
+    COORDONEES_POINT["A"][0], COORDONEES_POINT["A"][1],
+    fill=couleur_segment,
+    width=epaiseur_segment
+    )
     
     
 def main():
     selectionner_point()
     dessiner_point(cadre_dessin)
+    dessiner_segment(cadre_dessin)
 
 main()
 
