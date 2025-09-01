@@ -56,6 +56,8 @@ cadre_dessin.pack()
 
 #------------------------ Début du programme ------------------------#
 
+
+
 # Cette fonction dessine une grille sur le canvas, pour faciliter le positionnement des points
 def dessiner_grille_px(canvas= cadre_dessin, largeur_canvas=CANVAS_WIDTH, hauteur_canvas = CANVAS_HEIGHT, espacement_ligne=EPACEMENT_LIGNE):
     """
@@ -77,34 +79,56 @@ def dessiner_grille_px(canvas= cadre_dessin, largeur_canvas=CANVAS_WIDTH, hauteu
         canvas.create_line(0, y, largeur_canvas, y, fill=COULEUR_LIGNE_GRILLE)
 
 # Cette fonction demande à l'utilisateur de saisir les coordonnées des points
-def selectionner_point():
-    for point in ["A", "B", "C", "D"]:
-        x_point = int(input(f"Entrez la coordonnée x du point {point} : "))
-        y_point = int(input(f"Entrez la coordonnée y du point {point} : "))
-        COORDONEES_POINT[point] = (x_point, y_point)
+
+i = 0
+noms_points = ["A", "B", "C", "D"]
+
+# Cette fonction permet de recupérer les coordonnées des points lorsque l'utilisateur clique sur la fenêtre
+def selectionner_point(event):
+        global i
+        if i <= 3:
+            # Recupération du nom du point
+            nom_point = noms_points[i]
+            
+            # Recupération des coordonnées du point
+            x = event.x  # coordonnée x du clic
+            y = event.y  # coordonnée y du clic
+            
+            # Ajout du point à la liste des coordonnées
+            COORDONEES_POINT[nom_point] = (x, y)
+        
+            #Placer le point sur la fenêtre
+            placer_point(nom_point)
+            
+            i += 1
+
+        else:
+            print("Tous les points sont déjà placés !")
+            #TODO: Mettre une alerte pour indiquer que tous les points sont déjà placés
+
          
-# Cette fonction dessine les points sur la fenêtre
-def placer_point(canvas= cadre_dessin, couleur_point=COULEUR_POINT, rayon_point=RAYON_POINT):
+# Cette fonction dessine les points sur la fenêtre avec le nom du points
+def placer_point(point, canvas= cadre_dessin,  couleur_point=COULEUR_POINT, rayon_point=RAYON_POINT):
+
+    # Récupération des coordonnées du point
+    x = COORDONEES_POINT[point][0] # coordonnée x du point A par exemple
+    y = COORDONEES_POINT[point][1]
+        
+    print(f"les coordonnées de {point} sont : x = {x} et y = {y}")
     
-    for point in COORDONEES_POINT : 
+    # Dessiner le point sous forme d'ellipse 
+    canvas.create_oval(
+        x - rayon_point, y - rayon_point,
+        x + rayon_point, y + rayon_point,
+        fill=couleur_point
+    )
     
-        x = COORDONEES_POINT[point][0]
-        y = COORDONEES_POINT[point][1]
-        
-        print(f"les coordonnées de {point} sont : x = {x} et y = {y}")
-        
-        canvas.create_oval(
-            x - rayon_point, y - rayon_point,
-            x + rayon_point, y + rayon_point,
-            fill=couleur_point
-        )
-        
-        # Afficher le nom du point juste à côté (au-dessus)
-        canvas.create_text(
-            x, y - 10,  # légèrement au-dessus du point
-            text=point,
-            fill="#1c1c1e",
-        )
+    # Afficher le nom du point juste à côté (au-dessus)
+    canvas.create_text(
+        x, y - 10,  # légèrement au-dessus du point
+        text=point,
+        fill="#1c1c1e",
+    )
         
 # Cette fonction dessine les segments reliant les points afin de former un rectangle
 def dessiner_segment(canvas= cadre_dessin, couleur_segment=COULEUR_SEGMENT, epaiseur_segment=EPAISAUR_SEGMENT ) : 
@@ -144,11 +168,9 @@ def dessiner_segment(canvas= cadre_dessin, couleur_segment=COULEUR_SEGMENT, epai
 
 
 # Fonction principale
-def main():
+def main(canvas= cadre_dessin):
     dessiner_grille_px()
-    selectionner_point()
-    placer_point()
-    dessiner_segment()
+    canvas.bind("<Button-1>", selectionner_point)
 
 main()
 
