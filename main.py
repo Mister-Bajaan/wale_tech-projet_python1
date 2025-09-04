@@ -1,11 +1,11 @@
-from tkinter import Canvas, Tk
+from tkinter import Canvas, Tk, Frame, Label
 
 
 # --------------------- Constantes --------------------- #
 
 # Largeur et hauteur de la fenêtre
-CANVAS_WIDTH = 500
-CANVAS_HEIGHT = 500
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 700
 BACKGROUND_COLOR = '#f6f6f6'
 
 # Caractéristiques de la grille
@@ -36,6 +36,32 @@ fenetre = Tk()
 # Titre de la fenêtre
 fenetre.title("Coordonées des 4 points d'un rectangle")
 
+# Récupération de la taille de l'écran
+screen_width = fenetre.winfo_screenwidth()
+screen_height = fenetre.winfo_screenheight()
+
+# Calculer les coordonnées du centre de l'écran
+center_x = int(screen_width/2 - WINDOW_WIDTH / 2)
+center_y = int(screen_height/2 - WINDOW_HEIGHT / 2)
+
+# Redimensionner la fenêtre
+fenetre.geometry(f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}+{center_x}+{center_y}')
+
+# Ne pas pouvoir redimensionner la fenêtre
+fenetre.resizable(False, False)
+
+# Pour afficher une icône dans la fenêtre (Mettre le logo de l'entreprise dans le futur)
+# fenetre.iconbitmap('path')
+
+# Geometrie de la fenêtre pour avoir n colonnes et m lignes
+## Pour avoir 3 colonnes
+for i in range (3) :
+    fenetre.columnconfigure(i, weight=1)
+
+## Pour avoir 4 lignes
+for i in range(4):
+    fenetre.rowconfigure(i, weight=1)
+
 
 
 #--------------------- Configuration de l'interface : Zone de dessin ---------------------#
@@ -50,11 +76,37 @@ fenetre.title("Coordonées des 4 points d'un rectangle")
     background : Couleur de fond de la zone de dessin
 """
 
-cadre_dessin = Canvas(fenetre, width=CANVAS_WIDTH, height=CANVAS_HEIGHT, background=BACKGROUND_COLOR)
+cadre_dessin = Canvas(fenetre, background=BACKGROUND_COLOR)
+# configurer de la taille de la zone de dessin
+cadre_dessin.grid(row=0, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
-# Le gestioannaire du placement des widgets dans la fenêtre (On peut utiliser le pack() ou le grid())
-cadre_dessin.pack()
 
+#--------------------- Configuration de l'interface : Zone pour les coordonnées de chaques points ---------------------#
+frame_points = Frame(fenetre, bg="#e8e8ea")
+frame_points.grid(row=1, column=0, columnspan=4, sticky="nsew", padx=10, pady=5)
+
+
+
+# Dictionnaire pour garder les labels existants
+labels_points = {}
+
+def afficher_coordonnees(nom_point, coord_x, coord_y):
+    
+    # Créer le label pour le point
+    lbl = Label(frame_points, text=f"Les coordonnées de {nom_point} ( {coord_x}, {coord_y})", height= 1)
+    
+    # Positionner le label dans la frame (une colonne par point)
+    col_index = len(labels_points)  # la colonne correspond au nombre de labels déjà existants
+    lbl.grid(row=0,column=col_index, sticky="nsew", padx=8, pady=10) # étire le label dans toutes les directions
+    
+    #  Toutes les colonnes ont la même largeur
+    frame_points.columnconfigure(col_index, weight=1) 
+    
+    # Toutes les lignes ont la même hauteur
+    frame_points.rowconfigure(0, weight=1)
+    
+    # Ajouter le label à la liste des labels
+    labels_points[nom_point] = lbl
 
 
 #------------------------ Début du programme ------------------------#
@@ -62,7 +114,7 @@ cadre_dessin.pack()
 
 
 # Cette fonction dessine une grille sur le canvas, pour faciliter le positionnement des points
-def dessiner_grille_px(canvas= cadre_dessin, largeur_canvas=CANVAS_WIDTH, hauteur_canvas = CANVAS_HEIGHT, espacement_ligne=ESPACEMENT_LIGNE):
+def dessiner_grille_px(canvas= cadre_dessin, largeur_canvas=WINDOW_WIDTH, hauteur_canvas = WINDOW_HEIGHT, espacement_ligne=ESPACEMENT_LIGNE):
     """
     Dessine une grille sur le canvas avec un espacement donné en pixels.
     Par défaut, l'unité qu'utilise Tkinter est le pixel.
@@ -103,6 +155,7 @@ def selectionner_point(event):
             #Placer le point sur la fenêtre
             placer_point(nom_point)
             dessiner_segment(COORDONEES_POINT)
+            afficher_coordonnees(nom_point, x, y)
             
             i += 1
 
