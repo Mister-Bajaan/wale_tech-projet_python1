@@ -1,7 +1,6 @@
 from tkinter import Canvas, Tk
 
 
-
 # --------------------- Constantes --------------------- #
 
 # Largeur et hauteur de la fenêtre
@@ -11,7 +10,7 @@ BACKGROUND_COLOR = '#f6f6f6'
 
 # Caractéristiques de la grille
 COULEUR_LIGNE_GRILLE = '#e8e8ea'
-EPACEMENT_LIGNE = 20
+ESPACEMENT_LIGNE = 20
 
 # Caractéristiques des points
 COORDONEES_POINT = {}
@@ -19,8 +18,12 @@ RAYON_POINT= 3
 COULEUR_POINT = '#34495e'
 
 # Caractéristiques des segments
-EPAISAUR_SEGMENT = 2
+EPAISEUR_SEGMENT = 2
 COULEUR_SEGMENT = '#b7c2c8'
+
+
+# Variables globales
+NOMS_POINTS = ["A", "B", "C", "D"]
 
 
 
@@ -59,13 +62,13 @@ cadre_dessin.pack()
 
 
 # Cette fonction dessine une grille sur le canvas, pour faciliter le positionnement des points
-def dessiner_grille_px(canvas= cadre_dessin, largeur_canvas=CANVAS_WIDTH, hauteur_canvas = CANVAS_HEIGHT, espacement_ligne=EPACEMENT_LIGNE):
+def dessiner_grille_px(canvas= cadre_dessin, largeur_canvas=CANVAS_WIDTH, hauteur_canvas = CANVAS_HEIGHT, espacement_ligne=ESPACEMENT_LIGNE):
     """
     Dessine une grille sur le canvas avec un espacement donné en pixels.
     Par défaut, l'unité qu'utilise Tkinter est le pixel.
     
     Paramètres :
-    - cancvas : le Canvas Tkinter
+    - canvas : le Canvas Tkinter
     - largeur_canvas : largeur du Canvas en pixels
     - hauteur_canvas : hauteur du Canvas en pixels
     - espacement_px : distance entre deux lignes de la grille
@@ -81,14 +84,14 @@ def dessiner_grille_px(canvas= cadre_dessin, largeur_canvas=CANVAS_WIDTH, hauteu
 # Cette fonction demande à l'utilisateur de saisir les coordonnées des points
 
 i = 0
-noms_points = ["A", "B", "C", "D"]
+
 
 # Cette fonction permet de recupérer les coordonnées des points lorsque l'utilisateur clique sur la fenêtre
 def selectionner_point(event):
         global i
         if i <= 3:
             # Recupération du nom du point
-            nom_point = noms_points[i]
+            nom_point = NOMS_POINTS[i]
             
             # Recupération des coordonnées du point
             x = event.x  # coordonnée x du clic
@@ -99,6 +102,7 @@ def selectionner_point(event):
         
             #Placer le point sur la fenêtre
             placer_point(nom_point)
+            dessiner_segment(COORDONEES_POINT)
             
             i += 1
 
@@ -129,42 +133,68 @@ def placer_point(point, canvas= cadre_dessin,  couleur_point=COULEUR_POINT, rayo
         text=point,
         fill="#1c1c1e",
     )
+ 
         
 # Cette fonction dessine les segments reliant les points afin de former un rectangle
-def dessiner_segment(canvas= cadre_dessin, couleur_segment=COULEUR_SEGMENT, epaiseur_segment=EPAISAUR_SEGMENT ) : 
+def dessiner_segment(dict_points, canvas=cadre_dessin, couleur_segment=COULEUR_SEGMENT, epaiseur_segment=EPAISEUR_SEGMENT):
+    # Vérifier qu'on a bien 4 points
+    if len(dict_points) != 4:
+        print("Il faut 4 points pour dessiner le rectangle.")
+        return
     
-    # Segment AB
-    canvas.create_line(
-        COORDONEES_POINT["A"][0], COORDONEES_POINT["A"][1],
-        COORDONEES_POINT["B"][0], COORDONEES_POINT["B"][1],
-        fill=couleur_segment,
-        width=epaiseur_segment
-    )
+    # Réordonner les points qui sont dans notre dictionnaire
+    points = ordonner_points(dict_points)
     
-    # Segment BC
-    canvas.create_line(
-        COORDONEES_POINT["B"][0], COORDONEES_POINT["B"][1],
-        COORDONEES_POINT["C"][0], COORDONEES_POINT["C"][1],
-        fill=couleur_segment,
-        width=epaiseur_segment
-    )
+    # print(points)
     
-    #Segment CD
-    canvas.create_line(
-        COORDONEES_POINT["C"][0], COORDONEES_POINT["C"][1],
-        COORDONEES_POINT["D"][0], COORDONEES_POINT["D"][1],
-        fill=couleur_segment,
-        width=epaiseur_segment
-     )
+    x1, y1 = points["haut_gauche"]
+    x2, y2 = points["haut_droite"]
+    x3, y3 = points["bas_droite"]
+    x4, y4 = points["bas_gauche"]
     
-    #Segment DA
-    canvas.create_line(
-    COORDONEES_POINT["D"][0], COORDONEES_POINT["D"][1],
-    COORDONEES_POINT["A"][0], COORDONEES_POINT["A"][1],
-    fill=couleur_segment,
-    width=epaiseur_segment
-    )
+    # Dessiner les 4 côtés
+    canvas.create_line(x1, y1, x2, y2, fill=couleur_segment, width=epaiseur_segment) # Segment haut [AB]
+    canvas.create_line(x2, y2, x3, y3, fill=couleur_segment, width=epaiseur_segment) # Segment droite [BC]
+    canvas.create_line(x3, y3, x4, y4, fill=couleur_segment, width=epaiseur_segment) # Segment bas [CD]
+    canvas.create_line(x4, y4, x1, y1, fill=couleur_segment, width=epaiseur_segment) # Segment gauche [DA]
+
     
+
+# Fonction pour trier les points par ordre de X puis de Y
+"""
+    En principe : 
+    Point haut à gauche (min_x, min_y) 
+    Point haut à droite (max_x, min_y) 
+    Point bas à droite  (max_x, max_y) 
+    Point bas à gauche  (min_x, max_y) 
+    
+"""    
+def ordonner_points(dict_points):
+    # Recuperer les coordonnées des points sous forme de liste
+    # Exemple : {"A": (120, 100), "B": (280, 200)} -> [(120, 100), (280, 200)]
+    points = list(dict_points.values())
+    
+
+    # trouver les min et max en X et Y:
+    min_x = min(p[0] for p in points)
+    max_x = max(p[0] for p in points)
+    min_y = min(p[1] for p in points)
+    max_y = max(p[1] for p in points)
+    
+    # Association des de chaque coin du rectangle aves ses coordonnées:
+    point_haut_gauche = (min_x, min_y)   # haut-gauche
+    point_haut_droite = (max_x, min_y)   # haut-droite
+    point_bas_droite  = (max_x, max_y)   # bas-droite
+    point_bas_gauche  = (min_x, max_y)   # bas-gauche
+
+    # return {"A": point_haut_gauche, "B": point_haut_droite, "C": point_bas_droite, "D": point_bas_gauche}
+    
+    return {
+        "haut_gauche": point_haut_gauche,
+        "haut_droite": point_haut_droite,
+        "bas_droite": point_bas_droite,
+        "bas_gauche": point_bas_gauche
+    }
 
 
 # Fonction principale
@@ -190,7 +220,6 @@ main()
     Yc = Yd
     
     Ya = Yb < Yc = Yd
-    
     
     Exemple : Pour un rectangle de taille 150x50
     A(50,50) 
