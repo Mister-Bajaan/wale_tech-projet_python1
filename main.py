@@ -153,10 +153,12 @@ def dessiner_segment(dict_points, canvas=cadre_dessin, couleur_segment=COULEUR_S
     x4, y4 = points["bas_gauche"]
     
     # Dessiner les 4 côtés
-    canvas.create_line(x1, y1, x2, y2, fill=couleur_segment, width=epaiseur_segment) # Segment haut [AB]
-    canvas.create_line(x2, y2, x3, y3, fill=couleur_segment, width=epaiseur_segment) # Segment droite [BC]
-    canvas.create_line(x3, y3, x4, y4, fill=couleur_segment, width=epaiseur_segment) # Segment bas [CD]
-    canvas.create_line(x4, y4, x1, y1, fill=couleur_segment, width=epaiseur_segment) # Segment gauche [DA]
+    canvas.create_polygon( 
+        x1, y1, x2, y2, x3, y3, x4, y4,
+        outline=couleur_segment,
+        fill="",   # pas de remplissage
+        width=epaiseur_segment
+    )
 
     
 
