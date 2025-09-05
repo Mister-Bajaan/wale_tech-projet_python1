@@ -162,12 +162,21 @@ L'application se compose de plusieurs parties distinctes :
   - `coord_x` : coordonnée x du point type `int`.
   - `coord_y` : coordonnée y du point type `int`.
 
-### H. Quiiter le programme
+### H. Quiter le programme
 
 - La fonction `quitter_programme()` :
   - Ferme la fenêtre quand on clique sur le bouton "Quitter".
 
-### I. Lancement du programme
+### I. Recommencer le programme
+
+- La fonction `reset_programme()` :
+  - Efface les points et les coordonnées.
+  - Redéfinit le compteur `i` à 0.
+  - Supprime tout le Canvas.
+  - Supprime les labels des cartes.
+  - Remettre la grille.
+
+### J. Lancement du programme
 
 - La fonction `main()` :
   - Dessine la grille.
@@ -182,7 +191,9 @@ L'application se compose de plusieurs parties distinctes :
 2. Cliquez sur 4 points dans la zone de dessin pour former un rectangle.
 3. Le programme affichera les points A, B, C et D avec leurs coordonnées sur le terminal.
 4. Les segments du rectangle se dessinent automatiquement.
-5. Le programme affichera les coordonnées des points A, B, C et D sur la fenêtre principale. `Exemple : Les coordonnées de A (50, 50)`
+5. Le programme affichera les coordonnées des points A, B, C et D sur la fenêtre principale. `Exemple : Les coordonnées de A (50, 50)`.
+6. Cliquez sur le bouton "Recommencer" pour recommencer.
+7. Cliquez sur le bouton "Quitter" pour fermer la fenêtre.
 
 <!-- ### Exemple de coordonnées pour un rectangle :
 
