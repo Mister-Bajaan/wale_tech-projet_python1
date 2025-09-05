@@ -93,13 +93,9 @@ L'application se compose de plusieurs parties distinctes :
   - La **zone pour pour afficher les coordonnées de chaque point** .
   <!-- - La **zone pour l'interaction avec le programme** pour afficher les boutons afin de quitter/réinitialiser le programme. -->
 
----
-
 ### B. Grille
 
 - La fonction `dessiner_grille_px()` dessine une **grille sur la zone de dessin** pour faciliter le placement des points.
-
----
 
 ### C. Ajout des points
 
@@ -111,8 +107,6 @@ L'application se compose de plusieurs parties distinctes :
   4. Appelle `dessiner_point(point)` pour afficher le point sur le Canvas.
   5. Appelle `dessiner_rectangle(dict_points)` pour tracer les segments du rectangle si 4 points sont présents.
 
----
-
 ### D. Dessin des points
 
 - La fonction `placer_point(point)` :
@@ -123,8 +117,6 @@ L'application se compose de plusieurs parties distinctes :
 - Paramètres :
   - `point` : nom du point (`A`, `B`, `C`, `D`).
 
----
-
 ### E. Dessin du rectangle
 
 - La fonction `dessiner_rectangle(dict_points)` :
@@ -134,8 +126,6 @@ L'application se compose de plusieurs parties distinctes :
   3. Utilise `create_polygon()` pour tracer le rectangle en une seule commande.
 - Paramètres :
   - `dict_points` : dictionnaire contenant les coordonnées des points sous la forme de `{"A": (120, 100), "B": (280, 200)}`
-
----
 
 ### F. Ordonnancement des points
 
@@ -149,8 +139,6 @@ L'application se compose de plusieurs parties distinctes :
   - Retourne un dictionnaire avec ces points pour garantir que le rectangle est tracé correctement, quel que soit l’ordre de clics.
 - Paramètres :
   - `dict_points` : dictionnaire contenant les coordonnées des points.
-
----
 
 ### G. Affichage des coordonnées des points
 
@@ -207,6 +195,8 @@ Le rectangle apparaîtra ainsi :
 A ----- B
 |       |
 D ----- C -->
+
+---
 
 ## Limitations et améliorations possibles
 
