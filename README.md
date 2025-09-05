@@ -55,7 +55,7 @@ python --version ou python -V
 - sur linux :
 
 ```python
-python3 --version ou python3 -V
+python3 --version
 ```
 
 Si Python est installé, vous devriez voir une version similaire à la suivante : `3.x.x`
