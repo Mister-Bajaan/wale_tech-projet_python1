@@ -84,68 +84,60 @@ L’application devrait s’ouvrir dans une fenêtre graphique avec une grille e
 
 L'application se compose de plusieurs parties distinctes :
 
-### 1. Fenêtre principale et Canvas
+### A. Fenêtre principale et Canvas
 
-- Le programme crée une **fenêtre Tkinter** avec une zone de dessin (`Canvas`) de 500x500 pixels.
+- Le programme crée une **fenêtre Tkinter** avec une zone de dessin (`Canvas`) de 1000x700 pixels.
 - La couleur de fond est `#f6f6f6`.
 - Le `Canvas` sert à afficher :
-  - La **grille** pour positionner les points.
-  - Les **points cliqués** par l'utilisateur.
-  - Les **segments du rectangle** tracés automatiquement.
+  - La **zone de dessin** pour positionner les points.
+  - La **zone pour pour afficher les coordonnées de chaque point** .
+  <!-- - La **zone pour l'interaction avec le programme** pour afficher les boutons afin de quitter/réinitialiser le programme. -->
 
 ---
 
-### 2. Grille
+### B. Grille
 
-- La fonction `dessiner_grille_px()` dessine une **grille sur le Canvas** pour faciliter le placement des points.
-- Paramètres :
-  - `canvas` : le Canvas Tkinter.
-  - `espacement_ligne` : distance en pixels entre les lignes de la grille (défaut 20).
-  - `COULEUR_LIGNE_GRILLE` : couleur des lignes.
+- La fonction `dessiner_grille_px()` dessine une **grille sur la zone de dessin** pour faciliter le placement des points.
 
 ---
 
-### 3. Placement des points
+### C. Ajout des points
 
 - Lorsque l'utilisateur clique sur le Canvas, la fonction `selectionner_point(event)` est appelée.
 - Cette fonction :
-  1. Récupère le nom du point à placer (`A`, `B`, `C`, `D`).
+  1. Récupère le nom du point à placer (`A`, `B`, `C`, `D`) dans la liste `NOMS_POINTS` définie dans le programme.
   2. Récupère les coordonnées `(x, y)` du clic.
   3. Stocke ces coordonnées dans le dictionnaire global`COORDONEES_POINT` en l'affectant à la clé correspondant au nom du point.
-  4. Appelle `placer_point()` pour afficher le point sur le Canvas.
-  5. Appelle `dessiner_segment()` pour tracer les segments du rectangle si 4 points sont présents.
+  4. Appelle `dessiner_point(point)` pour afficher le point sur le Canvas.
+  5. Appelle `dessiner_rectangle(dict_points)` pour tracer les segments du rectangle si 4 points sont présents.
 
 ---
 
-### 4. Dessin des points
+### D. Dessin des points
 
 - La fonction `placer_point(point)` :
+  - Il prend en paramètre le nom du point.
   - Dessine un **cercle** représentant le point.
-  - Affiche le **nom du point** au-dessus.
-  - Paramètres :
-    - `point` : nom du point (`A`, `B`, `C`, `D`).
-    - `canvas` : le Canvas Tkinter.
-    - `couleur_point` : couleur du point.
-    - `rayon_point` : taille du point.
+  - Affiche le **nom du point** au-dessus du cercle.
+  - Affiche le **nom du point** et ses coordonées dans le terminal.
+- Paramètres :
+  - `point` : nom du point (`A`, `B`, `C`, `D`).
 
 ---
 
-### 5. Dessin des segments / rectangle
+### E. Dessin du rectangle
 
-- La fonction `dessiner_segment(dict_points)` :
+- La fonction `dessiner_rectangle(dict_points)` :
   1. Vérifie qu’il y a bien 4 points.
   2. Appelle `ordonner_points(dict_points)` pour obtenir les points dans l’ordre :
      - `haut_gauche`, `haut_droite`, `bas_droite`, `bas_gauche`.
   3. Utilise `create_polygon()` pour tracer le rectangle en une seule commande.
 - Paramètres :
-  - `dict_points` : dictionnaire contenant les coordonnées des points.
-  - `canvas` : le Canvas Tkinter.
-  - `couleur_segment` : couleur des segments.
-  - `epaiseur_segment` : épaisseur des lignes.
+  - `dict_points` : dictionnaire contenant les coordonnées des points sous la forme de `{"A": (120, 100), "B": (280, 200)}`
 
 ---
 
-### 6. Ordonnancement des points
+### F. Ordonnancement des points
 
 - La fonction `ordonner_points(dict_points)` :
   - Calcule les **coordonnées extrêmes** (`min_x`, `max_x`, `min_y`, `max_y`).
@@ -160,15 +152,15 @@ L'application se compose de plusieurs parties distinctes :
 
 ---
 
-### 7. Affichage des coordonnées des points
+### G. Affichage des coordonnées des points
 
 - La fonction `afficher_coordonnees(nom_point, coord_x, coord_y)` :
   - Crée un **label** (le texte) pour le point.
   - Affiche le **nom du point** et les **coordonnées** dans une sorte de carte. Exemple - `Les coordonnées de A ( 50, 50 )`
 - Paramètres :
   - `nom_point` : nom du point (`A`, `B`, `C`, `D`).
-  - `coord_x` : coordonnée x du point.
-  - `coord_y` : coordonnée y du point.
+  - `coord_x` : coordonnée x du point type `int`.
+  - `coord_y` : coordonnée y du point type `int`.
 
 ### 8. Lancement du programme
 
