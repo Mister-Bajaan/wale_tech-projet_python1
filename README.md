@@ -160,7 +160,17 @@ L'application se compose de plusieurs parties distinctes :
 
 ---
 
-### 7. Lancement du programme
+### 7. Affichage des coordonnées des points
+
+- La fonction `afficher_coordonnees(nom_point, coord_x, coord_y)` :
+  - Crée un **label** (le texte) pour le point.
+  - Affiche le **nom du point** et les **coordonnées** dans une sorte de carte. Exemple - `Les coordonnées de A ( 50, 50 )`
+- Paramètres :
+  - `nom_point` : nom du point (`A`, `B`, `C`, `D`).
+  - `coord_x` : coordonnée x du point.
+  - `coord_y` : coordonnée y du point.
+
+### 8. Lancement du programme
 
 - La fonction `main()` :
   - Dessine la grille.
@@ -175,6 +185,7 @@ L'application se compose de plusieurs parties distinctes :
 2. Cliquez sur 4 points dans la zone de dessin pour former un rectangle.
 3. Le programme affichera les points A, B, C et D avec leurs coordonnées sur le terminal.
 4. Les segments du rectangle se dessinent automatiquement.
+5. Le programme affichera les coordonnées des points A, B, C et D sur la fenêtre principale. `Exemple : Les coordonnées de A (50, 50)`
 
 <!-- ### Exemple de coordonnées pour un rectangle :
 
@@ -208,20 +219,17 @@ D ----- C -->
 - Pas de choix de couleur ou d’épaisseur des segments par l’utilisateur.
 - La grille n'est pas graduée.
 
----
-
 ### 2. Améliorations possibles
 
 2.1. **Interface plus interactive** :  
 
-- Afficher les coordonnées des points sur la fenêtre principale.
-- Ajouter un bouton "Réinitialiser" pour effacer les points et recommencer.
-- Ajouter un bouton "Quitter" pour fermer la fenêtre.
-- Afficher du texte sur la fenêtre pour indiquer quelle point va être placé.
-- Afficher du texte sur la fenêtre pour indiquer la taille du rectangle.
-- Graduer la grille pour faciliter le placement des points à des coordonnées précises.
+- [x] Afficher les coordonnées des points sur la fenêtre principale.
+- [ ] Ajouter un bouton "Réinitialiser" pour effacer les points et recommencer.
+- [ ] Ajouter un bouton "Quitter" pour fermer la fenêtre.
+- [ ] Afficher du texte sur la fenêtre pour indiquer quelle point va être placé.
+- [ ] Afficher du texte sur la fenêtre pour indiquer la taille du rectangle.
 
 2.2. **Options de personnalisation** :  
 
-- Couleur et épaisseur des segments modifiable par l’utilisateur.
-- Remplissage des rectangles possible.
+- [ ] Couleur et épaisseur des segments modifiable par l’utilisateur.
+- [ ] Remplissage des rectangles possible.
