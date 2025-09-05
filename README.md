@@ -14,6 +14,29 @@ Ce projet est une application Python utilisant Tkinter qui permet à l'utilisate
 
 ---
 
+## Table des matières
+
+- [Installation et prérequis](#installation-et-prérequis)
+    - [1. Prérequis](#1-prérequis)
+    - [2. Installation](#2-installation)
+- [Fonctionnement du programme](#fonctionnement-du-programme)
+    - [A. Fenêtre principale et Canvas](#a-fenêtre-principale-et-canvas)
+    - [B. Grille](#b-grille)
+    - [C. Ajout des points](#c-ajout-des-points)
+    - [D. Dessin des points](#d-dessin-des-points)
+    - [E. Dessin du rectangle](#e-dessin-du-rectangle)
+    - [F. Ordonnancement des points](#f-ordonnancement-des-points)
+    - [G. Affichage des coordonnées des points](#g-affichage-des-coordonnées-des-points)
+    - [H. Quiter le programme](#h-quiter-le-programme)
+    - [I. Recommencer le programme](#i-recommencer-le-programme)
+    - [J. Lancement du programme](#j-lancement-du-programme)
+- [Exemple d’utilisation](#exemple-dutilisation)
+- [Limitations et améliorations possibles](#limitations-et-améliorations-possibles)
+    - [1. Limitations](#1-limitations)
+    - [2. Améliorations possibles](#2-améliorations-possibles)
+ 
+---
+
 ## Installation et prérequis
 
 ### 1. Prérequis
