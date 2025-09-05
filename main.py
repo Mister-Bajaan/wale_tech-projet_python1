@@ -129,11 +129,22 @@ def quitter_programme():
 bouton_quitter = Button(zone_interaction, text="Quitter", command=quitter_programme, background=RED, fg="white")
 bouton_quitter.grid(row=0, column=0, sticky="nsew", padx=5, pady= 5, ipadx=10, ipady=10)
 
-
+# Callback pour recommencer le programme
 def reset_programme():
-    print("Reset !")  # tu peux mettre la logique de reset ici
+    global i
+    COORDONEES_POINT.clear()
+    i = 0
 
-bouton_reset = Button(zone_interaction, text="Reset", command=reset_programme, background=VERT, fg="white")
+    # Supprimer tout le Canvas
+    zone_dessin.delete("all")
+    dessiner_grille_px()
+
+    # Supprimer les labels des cartes
+    for lbl in labels_points.values():
+        lbl.destroy()
+    labels_points.clear()
+
+bouton_reset = Button(zone_interaction, text="Recommencer", command=reset_programme, background=VERT, fg="white")
 bouton_reset.grid(row=0, column=1, sticky="nsew", padx=5, pady= 5, ipadx=10, ipady=10)
 
 #------------------------ Début du programme ------------------------#

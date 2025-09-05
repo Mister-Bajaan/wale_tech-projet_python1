@@ -167,7 +167,6 @@ L'application se compose de plusieurs parties distinctes :
 - La fonction `quitter_programme()` :
   - Ferme la fenêtre quand on clique sur le bouton "Quitter".
 
-
 ### I. Lancement du programme
 
 - La fonction `main()` :
@@ -213,7 +212,6 @@ D ----- C -->
 
 1.3. **Interface simple** :  
 
-- Pas de boutons pour interagir avec le programme.
 - Pas de choix de couleur ou d’épaisseur des segments par l’utilisateur.
 - La grille n'est pas graduée.
 
@@ -222,7 +220,7 @@ D ----- C -->
 2.1. **Interface plus interactive** :  
 
 - [x] Afficher les coordonnées des points sur la fenêtre principale.
-- [ ] Ajouter un bouton "Réinitialiser" pour effacer les points et recommencer.
+- [x] Ajouter un bouton "Réinitialiser" pour effacer les points et recommencer.
 - [x] Ajouter un bouton "Quitter" pour fermer la fenêtre.
 - [ ] Afficher du texte sur la fenêtre pour indiquer quelle point va être placé.
 - [ ] Afficher du texte sur la fenêtre pour indiquer la taille du rectangle.
