@@ -162,7 +162,13 @@ L'application se compose de plusieurs parties distinctes :
   - `coord_x` : coordonnée x du point type `int`.
   - `coord_y` : coordonnée y du point type `int`.
 
-### 8. Lancement du programme
+### H. Quiiter le programme
+
+- La fonction `quitter_programme()` :
+  - Ferme la fenêtre quand on clique sur le bouton "Quitter".
+
+
+### I. Lancement du programme
 
 - La fonction `main()` :
   - Dessine la grille.
@@ -217,7 +223,7 @@ D ----- C -->
 
 - [x] Afficher les coordonnées des points sur la fenêtre principale.
 - [ ] Ajouter un bouton "Réinitialiser" pour effacer les points et recommencer.
-- [ ] Ajouter un bouton "Quitter" pour fermer la fenêtre.
+- [x] Ajouter un bouton "Quitter" pour fermer la fenêtre.
 - [ ] Afficher du texte sur la fenêtre pour indiquer quelle point va être placé.
 - [ ] Afficher du texte sur la fenêtre pour indiquer la taille du rectangle.
 

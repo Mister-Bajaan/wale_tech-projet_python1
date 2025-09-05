@@ -1,4 +1,4 @@
-from tkinter import Canvas, Tk, Frame, Label
+from tkinter import Canvas, Tk, Frame, Label, Button
 
 
 # --------------------- Constantes --------------------- #
@@ -24,6 +24,10 @@ COULEUR_SEGMENT = '#b7c2c8'
 
 # Variables globales
 NOMS_POINTS = ["A", "B", "C", "D"]
+
+# Bg color
+RED = "#cd0e23"
+VERT = "#6aa84f"
 
 
 
@@ -87,6 +91,14 @@ zone_coordonnee_point.grid(row=1, column=0, columnspan=4, sticky="nsew", padx=10
 
 #--------------------- Configuration de l'interface : Zone pour l'interaction avec le programme (Quitter/reinitialiser) -------------------#
 
+zone_interaction = Frame(fenetre)
+zone_interaction.grid(row=2, column=0, columnspan=4, sticky="ew", padx=10, pady=5)
+
+zone_interaction.columnconfigure(0, weight=1)
+zone_interaction.columnconfigure(1, weight=1)
+
+#------------------------ Fonction pour l'interaction avec le programme ------------------------#
+
 # Dictionnaire pour garder les labels existants
 labels_points = {}
 
@@ -109,6 +121,20 @@ def afficher_coordonnees(nom_point, coord_x, coord_y):
     # Ajouter le label à la liste des labels
     labels_points[nom_point] = lbl
 
+
+# Callback pour quitter le programme
+def quitter_programme():
+    fenetre.destroy()
+    
+bouton_quitter = Button(zone_interaction, text="Quitter", command=quitter_programme, background=RED, fg="white")
+bouton_quitter.grid(row=0, column=0, sticky="nsew", padx=5, pady= 5, ipadx=10, ipady=10)
+
+
+def reset_programme():
+    print("Reset !")  # tu peux mettre la logique de reset ici
+
+bouton_reset = Button(zone_interaction, text="Reset", command=reset_programme, background=VERT, fg="white")
+bouton_reset.grid(row=0, column=1, sticky="nsew", padx=5, pady= 5, ipadx=10, ipady=10)
 
 #------------------------ Début du programme ------------------------#
 
@@ -253,6 +279,8 @@ def ordonner_points(dict_points):
     }
 
 
+
+    
 # Fonction principale
 def main():
     dessiner_grille_px()
